@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <com.sjl.stepview.widget.ArrowStepView
+        android:id="@+id/step_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:visibility="visible"
+        app:asv_current_select_step="1" />
+
+    <!--asv_current_select_color和asv_default_select_color是一个过渡色-->
+    <com.sjl.stepview.widget.ArrowStepView
+        android:id="@+id/step_view2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@android:color/white"
+        app:asv_current_select_color="@color/red_end"
+        app:asv_current_select_step="2"
+        app:asv_default_select_color="@color/red_start" />
+
+    <com.sjl.stepview.widget.ArrowStepView
+        android:id="@+id/step_view3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@android:color/white"
+        app:asv_current_select_color="@color/green_end"
+        app:asv_current_select_step="3"
+        app:asv_default_select_color="@color/green_start" />
+
+    <Button
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:onClick="onClick"
+        android:text="下一步" />
+
+
+</LinearLayout>
