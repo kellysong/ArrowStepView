@@ -20,3 +20,13 @@ Add it in your root build.gradle at the end of repositories:
 	dependencies {
 		        implementation 'com.github.kellysong:ArrowStepView-master:1.0.0'
 		}
+# 使用
+1. 设置数据
+	
+    	  List<String> steps = Arrays.asList(new String[]{"选择金额", "支付", "贴卡充值"});
+     	  arrowStepView.setSteps(steps);
+	  
+2. 下一步
+	
+	      arrowStepView.selectedCurrentStep(nextStep);
+	  
