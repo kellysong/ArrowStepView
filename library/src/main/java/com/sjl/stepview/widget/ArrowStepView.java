@@ -142,26 +142,22 @@ public class ArrowStepView extends View {
         if (stepSize == 0) {
             return;
         }
-        canvas.drawColor(Color.WHITE);                  //白色背景
+        canvas.drawColor(Color.WHITE);
         mStepWidth = mWidth / stepSize;
         float fraction = 0.0f;
 
-        //绘制指示器
         for (int i = 1; i <= mCurrentStep; i++) {
             final boolean isSelected = i == mCurrentStep;
-            if (isSelected) {//当前选中
+            if (isSelected) {
                 mPaint.setColor(currentSelectColor);
-            } else {//未选中
-                //颜色渐变
+            } else {
                 mPaint.setColor(getCurrentColor(fraction, defaultSelectColor, currentSelectColor));
                 fraction += 1.0f / ((stepSize - 2) == 1 ? 5 : stepSize - 2);
             }
-            //第一个节点
             if (i == 1) {
                 mPaint.setColor(defaultSelectColor);
                 Path path = new Path();
-                path.moveTo(0, 0);//起点
-                //右边箭头
+                path.moveTo(0, 0);
                 path.lineTo(mStepWidth, 0);
                 path.lineTo(mStepWidth + mTriangleWidth, mStepHeight / 2);
                 path.lineTo(mStepWidth, mStepHeight);
@@ -171,82 +167,62 @@ public class ArrowStepView extends View {
                 canvas.drawPath(path, mPaint);
             } else if (i > 1 && i < stepSize) {
                 Path path = new Path();
-                path.moveTo(mStepWidth * (i - 1), 0);//起点
-
-                //右边箭头
+                path.moveTo(mStepWidth * (i - 1), 0);
                 path.moveTo(mStepWidth * i, 0);
                 path.lineTo(mStepWidth * i + mTriangleWidth, mStepHeight / 2);
                 path.lineTo(mStepWidth * i, mStepHeight);
-
-                //左边箭头
                 path.lineTo(mStepWidth * (i - 1), mStepHeight);
                 path.lineTo(mStepWidth * (i - 1) + mTriangleWidth, mStepHeight / 2);
                 path.lineTo(mStepWidth * (i - 1), 0);
-
-                path.close();//闭合
+                path.close();
                 canvas.drawPath(path, mPaint);
             } else {
-                //最后一个节点
                 Path path = new Path();
-                path.moveTo(mStepWidth * (i - 1), 0);//起点
-
-                path.lineTo(mWidth, 0);//右上结束点
-                path.lineTo(mWidth, mStepHeight);//右下结束点
-
-                //左边箭头
-                path.lineTo(mStepWidth * (i - 1), mStepHeight);//左边结束点
+                path.moveTo(mStepWidth * (i - 1), 0);
+                path.lineTo(mWidth, 0);
+                path.lineTo(mWidth, mStepHeight);
+                path.lineTo(mStepWidth * (i - 1), mStepHeight);
                 path.lineTo(mStepWidth * (i - 1) + mTriangleWidth, mStepHeight / 2);
                 path.lineTo(mStepWidth * (i - 1), 0);
-
-                path.close();//闭合
+                path.close();
                 canvas.drawPath(path, mPaint);
             }
         }
-        //绘制文本
         for (int i = 1; i <= stepSize; i++) {
             final String text = mSteps.get(i - 1);
-            if (i <= mCurrentStep) {//当前选中
+            if (i <= mCurrentStep) {
                 mPaint.setColor(Color.WHITE);
-            } else {//未选中
+            } else {
                 mPaint.setColor(mTextColor);
             }
             float v = mPaint.measureText(text);
 
             String number = String.valueOf(i);
             mPaint.setStyle(Paint.Style.STROKE);
-            //绘制圆圈
             canvas.drawCircle(mStepWidth * i - mStepWidth / 2 - v / 2 - mTextMarginLeft, mStepHeight / 2, mCircleRadius, mPaint);
 
             mPaint.setStyle(Paint.Style.FILL);
-            //绘制序号
             mPaint.setTextSize(mCircleTextSize);
             int baseLineY = getBaseLineY();
 
 
             canvas.drawText(number, mStepWidth * i - mStepWidth / 2 - v / 2 - mTextMarginLeft, baseLineY, mPaint);
-            //绘制序号
             mPaint.setTextSize(mTextSize);
             baseLineY = getBaseLineY();
-            //绘制文字
             canvas.drawText(text, mStepWidth * i - mStepWidth / 2, baseLineY, mPaint);
         }
     }
 
 
     /**
-     * textPaint.getFontMetrics()这个方法，必须再paint设置属性之后调用，否则获取到的top和bottom值不准.
-     *
+     * 获取基线y轴坐标
      * @return
      */
     public int getBaseLineY() {
-        //计算文字的相应偏移量
         Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
-        //为基线到字体上边框的距离,即上图中的top
         float textTop = fontMetrics.top;
-        //为基线到字体下边框的距离,即上图中的bottom
         float textBottom = fontMetrics.bottom;
         float contentBottom = mStepHeight / 2;
-        //基线中间点的y轴计算公式
         int baseLineY = (int) (contentBottom - textTop / 2 - textBottom / 2);
         return baseLineY;
     }
